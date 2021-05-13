@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {NavController} from "@ionic/angular";
+import {TicketPage} from "../ticket/ticket.page";
 
 @Component({
   selector: 'app-tabs',
@@ -6,7 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+  ticket = TicketPage;
 
-  constructor() {}
+  constructor(private navCtrl: NavController) {
+    console.log(this.navCtrl);
+  }
 
 }

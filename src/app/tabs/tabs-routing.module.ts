@@ -8,8 +8,8 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        path: 'contact',
+        loadChildren: () => import('../contact/contact.module').then(m => m.Tab1PageModule)
       },
       {
         path: 'tab2',
@@ -24,15 +24,23 @@ const routes: Routes = [
         loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
       },
       {
+        path: 'ticket',
+        loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
+      },
+      {
+        path: 'sell-ticket',
+        loadChildren: () => import('../sell-ticket/sell-ticket.module').then(m => m.SellTicketPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/contact',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/contact',
     pathMatch: 'full'
   }
 ];

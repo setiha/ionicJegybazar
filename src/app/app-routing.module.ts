@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'ticket',
     loadChildren: () => import('./ticket/ticket.module').then( m => m.TicketPageModule)
   },
+  {
+    path: 'sell-ticket',
+    loadChildren: () => import('./sell-ticket/sell-ticket.module').then( m => m.SellTicketPageModule)
+  },
 ];
 @NgModule({
   imports: [
