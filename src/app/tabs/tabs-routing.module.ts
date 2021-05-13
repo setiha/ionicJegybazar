@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../sell-ticket/sell-ticket.module').then(m => m.SellTicketPageModule)
       },
       {
+        path: 'login',
+        loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
