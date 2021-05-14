@@ -22,7 +22,10 @@
     "@capacitor/core": "2.4.7",
     "@ionic-native/native-page-transitions": "^5.32.1",
     "@ionic/angular": "^5.5.2",
-    "rxjs": "~6.6.0",
+    "angularfire2": "^5.4.2",
+    "firebase": "^8.6.1",
+    "moment": "^2.29.1",
+    "rxjs": "^5.4.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
