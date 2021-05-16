@@ -1,32 +1,28 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-
-import { Observable } from 'rxjs';
-import {UserModel} from './user-model';
 import {ReplaySubject} from 'rxjs';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/operator/mergeMap';
-import {AngularFireAuth} from 'angularfire2/auth';
-import {AngularFireDatabase} from 'angularfire2/database';
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/catch';
+import {AngularFireAuth} from '@angular/fire/auth'
+import {AngularFireDatabase} from '@angular/fire/database'
+import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import "rxjs-compat/add/observable/of";
+import "rxjs-compat/add/operator/map"
+import "rxjs-compat/add/operator/switchMap"
+import "rxjs-compat/add/operator/do"
+import "rxjs-compat/add/operator/mergeMap"
+import "rxjs-compat/add/operator/first"
+import "rxjs-compat/add/observable/fromPromise"
 import * as moment from 'moment';
-
-@Injectable()
+import {UserModel} from "./user-model"
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
   isLoggedIn$ = new ReplaySubject<boolean>(1);
-
   _user = new ReplaySubject<any>(1);
 
   constructor(private _router: Router,
-              // private _http: HttpClient
               private afAuth: AngularFireAuth,
               private afDb: AngularFireDatabase) {
-
     this.afAuth.authState.subscribe(
       user => {
         if (user != null) {
@@ -42,15 +38,13 @@ export class UserService {
       }
     );
   }
-
-
   login(email: string, password: string): Observable<any> {
-    return Observable.fromPromise(this.afAuth.auth.signInWithEmailAndPassword(email, password));
+    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password));
   }
 
   register(param: UserModel, password: string) {
     return Observable.fromPromise(
-      this.afAuth.auth.createUserWithEmailAndPassword(param.email, password)
+      this.afAuth.createUserWithEmailAndPassword(param.email, password)
     ).do(
       user => this.save({...param, id: user.user.uid})
     );
@@ -61,26 +55,23 @@ export class UserService {
       user => user
     );
   }
-
-  getUserById(fbid: string) {
-    return this.afDb.object(`users/${fbid}`).valueChanges();
+  logout() {
+    this.afAuth.signOut();
+    this._router.navigate(['/home']);
+    console.log('kileptunk');
   }
 
   getCurrentUser() {
     return this._user.asObservable();
   }
-
-  logout() {
-    this.afAuth.auth.signOut();
-    this._router.navigate(['/home']);
-    console.log('kileptunk');
-  }
-
   addTicket(ticketId: any): Observable<any> {
-    return this._user.first().flatMap(
+    return this._user.first().mergeMap(
       user => {
         return this.afDb.list(`users/${user.id}/tickets`).push(ticketId);
       });
+  }
+  getUserById(fbid: string) {
+    return this.afDb.object(`users/${fbid}`).valueChanges();
   }
   private userOnlineDetect(user) {
     // specialis firebase path, a sajat connection allapotomat lehet vele vizsgalni
