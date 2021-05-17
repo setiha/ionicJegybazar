@@ -1,15 +1,12 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+<ion-header>
+  <ion-toolbar id="first">
+    <ion-buttons slot="start" (click)="clickOnkBackButton()">
+      <ion-icon name="caret-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+
 </ion-content>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {createAnimation, NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,15 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public navCtr: NavController) {}
+
+  clickOnkBackButton() {
+    const  animation = createAnimation()
+      .addElement(document.querySelector('#first'))
+      .duration(500)
+      .fromTo("opacity", 1, 0);
+    animation.play().then(r => this.navCtr.back());
+
+  }
 
 }

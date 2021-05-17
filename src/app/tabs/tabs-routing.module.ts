@@ -8,20 +8,12 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
-      },
-      {
         path: 'contact',
         loadChildren: () => import('../contact/contact.module').then(m => m.ContactPageModule)
       },
       {
-        path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-      },
-      {
-        path: 'ticket',
-        loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
+        path: 'home',
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'sell-ticket',
@@ -30,6 +22,10 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
+      },
+      {
+        path: 'ticket',
+        loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
       },
       {
         path: '',

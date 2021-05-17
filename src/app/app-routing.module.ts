@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
     path: 'ticket',
     loadChildren: () => import('./ticket/ticket.module').then( m => m.TicketPageModule)
   },
@@ -18,6 +22,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'contact',
+    loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
+  }
+
 ];
 @NgModule({
   imports: [

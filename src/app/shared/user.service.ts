@@ -39,7 +39,7 @@ export class UserService {
     );
   }
   login(email: string, password: string): Observable<any> {
-    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password));
+    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password).then(value => console.log(value)));
   }
 
   register(param: UserModel, password: string) {

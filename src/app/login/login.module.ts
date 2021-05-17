@@ -7,14 +7,24 @@ import { IonicModule } from '@ionic/angular';
 import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
+import {AngularFireDatabaseModule} from "@angular/fire/database";
+import {AngularFireAuthModule} from "@angular/fire/auth";
+import {UserService} from "../shared/user.service";
+
+
+
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
+  providers: [UserService],
   declarations: [LoginPage]
 })
 export class LoginPageModule {}
