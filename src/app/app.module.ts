@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import {IonicModule, IonicRouteStrategy, NavController, NavParams} from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import {TabsPageModule} from "./tabs/tabs.module";
 import {TicketPageModule} from "./ticket/ticket.module";
 import {SellTicketPageModule} from "./sell-ticket/sell-ticket.module";
 import {AngularFireModule} from "@angular/fire";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 export const firebaseConfig = {
   baseUrl: 'https://jegybazar-133bd.firebaseio.com/',
@@ -42,8 +43,9 @@ export const firebaseConfig = {
     TicketPage,
     SellTicketPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule, HomePageModule, TabsPageModule, TicketPageModule, SellTicketPageModule, AngularFireDatabaseModule,AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    AngularFireAuthModule,
+  HttpClientModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, NavParams, NavController, HttpClient],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

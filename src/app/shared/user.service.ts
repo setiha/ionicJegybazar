@@ -12,7 +12,7 @@ import "rxjs-compat/add/operator/mergeMap"
 import "rxjs-compat/add/operator/first"
 import "rxjs-compat/add/observable/fromPromise"
 import * as moment from 'moment';
-import {UserModel} from "./user-model"
+import {UserModel} from "./user-model";
 @Injectable({
   providedIn: 'root'
 })
@@ -25,9 +25,11 @@ export class UserService {
               private afDb: AngularFireDatabase) {
     this.afAuth.authState.subscribe(
       user => {
+
         if (user != null) {
           this.userOnlineDetect(user);
           this.getUserById(user.uid).subscribe(remoteUser => {
+
             this._user.next(remoteUser);
             this.isLoggedIn$.next(true);
           });
@@ -39,7 +41,7 @@ export class UserService {
     );
   }
   login(email: string, password: string): Observable<any> {
-    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password).then(value => console.log(value)));
+    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password));
   }
 
   register(param: UserModel, password: string) {
