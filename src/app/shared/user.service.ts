@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {ReplaySubject, Subject} from 'rxjs';
 import {AngularFireAuth} from '@angular/fire/auth'
 import {AngularFireDatabase} from '@angular/fire/database'
 import {Router} from "@angular/router";
@@ -13,35 +13,36 @@ import "rxjs-compat/add/operator/first"
 import "rxjs-compat/add/observable/fromPromise"
 import * as moment from 'moment';
 import {UserModel} from "./user-model";
+import {loginDataModel} from "./loginDataModel";
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isLoggedIn$ = new ReplaySubject<boolean>(1);
-  _user = new ReplaySubject<any>(1);
-
+  isLogin: boolean= false;
+  currentUser: loginDataModel = new loginDataModel();
+  loginSubject: Subject<any> = new Subject();
   constructor(private _router: Router,
               private afAuth: AngularFireAuth,
               private afDb: AngularFireDatabase) {
-    this.afAuth.authState.subscribe(
-      user => {
-
-        if (user != null) {
-          this.userOnlineDetect(user);
-          this.getUserById(user.uid).subscribe(remoteUser => {
-
-            this._user.next(remoteUser);
-            this.isLoggedIn$.next(true);
-          });
-        } else {
-          this._user.next(null);
-          this.isLoggedIn$.next(false);
-        }
-      }
-    );
+if(localStorage.loggedInUser){
+  this.currentUser = localStorage.loggedInUser;
+  this.setLoggedInState()
+}
   }
-  login(email: string, password: string): Observable<any> {
-    return Observable.fromPromise(this.afAuth.signInWithEmailAndPassword(email, password));
+  setLoggedInState(){
+    this.isLogin = true;
+    this.currentUser = new loginDataModel(this.currentUser);
+    this.loginSubject.next(this.currentUser);
+  }
+  login(email: string, password: string)  {
+     this.afAuth.signInWithEmailAndPassword(email, password).then((user) =>{
+       localStorage.loggedInUser = user.user;
+       this.setLoggedInState();
+       }
+     ).catch(firebaseError => {
+       console.error(firebaseError)
+     })
+;
   }
 
   register(param: UserModel, password: string) {
@@ -63,15 +64,6 @@ export class UserService {
     console.log('kileptunk');
   }
 
-  getCurrentUser() {
-    return this._user.asObservable();
-  }
-  addTicket(ticketId: any): Observable<any> {
-    return this._user.first().mergeMap(
-      user => {
-        return this.afDb.list(`users/${user.id}/tickets`).push(ticketId);
-      });
-  }
   getUserById(fbid: string) {
     return this.afDb.object(`users/${fbid}`).valueChanges();
   }

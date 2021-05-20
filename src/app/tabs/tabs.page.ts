@@ -11,7 +11,6 @@ export class TabsPage {
   ticket = TicketPage;
 
   constructor(private navCtrl: NavController) {
-    console.log(this.navCtrl);
   }
 
 }
