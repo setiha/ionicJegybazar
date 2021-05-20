@@ -3,10 +3,19 @@
     <ion-buttons slot="start" (click)="clickOnkBackButton()">
       <ion-icon name="caret-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>Home</ion-title>
+    <ion-title>Esemenyek</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let eventCard of eventList">
+    <img [src]= 'eventCard.pictureURL' />
+    <ion-card-header>
+      <ion-card-subtitle>{{eventCard.description}}</ion-card-subtitle>
+      <ion-card-title>{{eventCard.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
 
+    </ion-card-content>
+  </ion-card>
 </ion-content>

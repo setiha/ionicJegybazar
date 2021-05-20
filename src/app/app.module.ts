@@ -20,6 +20,7 @@ import {TicketPageModule} from "./ticket/ticket.module";
 import {SellTicketPageModule} from "./sell-ticket/sell-ticket.module";
 import {AngularFireModule} from "@angular/fire";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {EventService} from "./shared/event.service";
 
 export const firebaseConfig = {
   baseUrl: 'https://jegybazar-133bd.firebaseio.com/',
@@ -45,7 +46,7 @@ export const firebaseConfig = {
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule, HomePageModule, TabsPageModule, TicketPageModule, SellTicketPageModule, AngularFireDatabaseModule,AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
   HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, NavParams, NavController, HttpClient],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, NavParams, NavController, HttpClient, EventService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
