@@ -41,5 +41,4 @@ export class LoginPage implements OnInit {
   login() {
     this.userService.login(this.loginData.email, this.loginData.password)
   }
-
 }

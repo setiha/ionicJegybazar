@@ -3,11 +3,17 @@
     <ion-buttons slot="start" (click)="clickOnkBackButton()">
       <ion-icon name="caret-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>Esemenyek</ion-title>
+    <ion-title (click)="logOut()">Esemenyek</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="openEventManager()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
   <ion-card *ngFor="let eventCard of eventList">
     <img [src]= 'eventCard.pictureURL' />
     <ion-card-header>
@@ -17,5 +23,13 @@
     <ion-card-content>
 
     </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <ion-button class="event-edit-button" size="small" fill="clear" (click) = "updateEvent(eventCard)">
+          <ion-icon name="create"></ion-icon>
+           Szerkesztes
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
 </ion-content>

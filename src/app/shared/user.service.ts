@@ -14,36 +14,43 @@ import "rxjs-compat/add/observable/fromPromise"
 import * as moment from 'moment';
 import {UserModel} from "./user-model";
 import {loginDataModel} from "./loginDataModel";
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isLogin: boolean= false;
+  isLogin: boolean = false;
   currentUser: loginDataModel = new loginDataModel();
   loginSubject: Subject<any> = new Subject();
+
   constructor(private _router: Router,
               private afAuth: AngularFireAuth,
               private afDb: AngularFireDatabase) {
-if(localStorage.loggedInUser){
-  this.currentUser = localStorage.loggedInUser;
-  this.setLoggedInState()
-}
+    if (localStorage.loggedInUser) {
+      this.currentUser = localStorage.loggedInUser;
+      this.setLoggedInState()
+    }
   }
-  setLoggedInState(){
+
+  setLoggedInState() {
     this.isLogin = true;
     this.currentUser = new loginDataModel(this.currentUser);
     this.loginSubject.next(this.currentUser);
   }
-  login(email: string, password: string)  {
-     this.afAuth.signInWithEmailAndPassword(email, password).then((user) =>{
-       localStorage.loggedInUser = user.user;
-       this.setLoggedInState();
-       }
-     ).catch(firebaseError => {
-       console.error(firebaseError)
-     })
-;
+
+  login(email: string, password: string) {
+    this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
+        localStorage.loggedInUser = user.user;
+        console.log('user', user);
+        this.setLoggedInState();
+      }
+    ).catch(firebaseError => {
+      console.error(firebaseError)
+    })
+    ;
   }
+
+
 
   register(param: UserModel, password: string) {
     return Observable.fromPromise(
@@ -58,15 +65,11 @@ if(localStorage.loggedInUser){
       user => user
     );
   }
-  logout() {
-    this.afAuth.signOut();
-    this._router.navigate(['/home']);
-    console.log('kileptunk');
-  }
 
   getUserById(fbid: string) {
     return this.afDb.object(`users/${fbid}`).valueChanges();
   }
+
   private userOnlineDetect(user) {
     // specialis firebase path, a sajat connection allapotomat lehet vele vizsgalni
     this.afDb.object('.info/connected').valueChanges().switchMap(
@@ -113,4 +116,5 @@ if(localStorage.loggedInUser){
         }
       );
   }
+
 }

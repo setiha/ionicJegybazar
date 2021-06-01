@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'contact',
     loadChildren: () => import('./contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'event-manager',
+    loadChildren: () => import('./event-manager/event-manager.module').then( m => m.EventManagerPageModule)
   }
 
 ];

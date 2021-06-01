@@ -24,7 +24,11 @@ const routes: Routes = [
         loadChildren: () => import('../login/login.module').then(m => m.LoginPageModule)
       },
       {
-        path: 'ticket',
+        path: 'event-manager',
+        loadChildren: () => import('../event-manager/event-manager.module').then(m => m.EventManagerPageModule)
+      },
+      {
+        path: 'event-manager',
         loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
       },
       {
