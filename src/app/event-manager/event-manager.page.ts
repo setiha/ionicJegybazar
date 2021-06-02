@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {createAnimation, NavController, NavParams} from "@ionic/angular";
+import {createAnimation, NavController, NavParams, ToastController} from "@ionic/angular";
 import {EventModel} from "../shared/event-model";
 import {EventService} from "../shared/event.service";
 
@@ -11,6 +11,7 @@ import {EventService} from "../shared/event.service";
 export class EventManagerPage implements OnInit {
   newEventModel: EventModel = new EventModel();
   isNewEvent;
+  toastMessage: string;
   eventKeyList: object[] = [
     {key: 'name', label: 'Nev'},
     {key: 'date', label: 'Datum'},
@@ -20,17 +21,12 @@ export class EventManagerPage implements OnInit {
 
   constructor(public navCtr: NavController,
               public eventService: EventService,
-              public navParams: NavParams) {
+              public toastController: ToastController) {
 
   }
 
   ngOnInit() {
-    this.eventService.event.subscribe(
-      value => this.newEventModel = value
-    );
-    this.eventService.isNewEvent.subscribe(
-      event => this.isNewEvent = event
-    );
+    this.eventHandler();
   }
 
   clickOnkBackButton() {
@@ -43,7 +39,38 @@ export class EventManagerPage implements OnInit {
 
   saveNewEvent() {
     this.eventService.save(this.newEventModel);
-    this.newEventModel = new EventModel();
-    this.navCtr.navigateRoot('tabs/home').then(value => value);
+    this.presentToast(this.toastMessage, () => this.navCtr.navigateRoot('tabs/home').then(value => value), 'top').then(value => this.newEventModel = new EventModel());
+
+  }
+
+  async presentToast(message: string, callBack: any = 0, position: any) {
+    const toast = await this.toastController.create({
+      message: message,
+      position: position,
+      duration: 1000
+    });
+    await toast.present();
+    await toast.onDidDismiss().then(resp => {
+      if (callBack) {
+        callBack();
+      }
+    });
+  }
+
+  eventHandler(){
+    this.eventService.event.subscribe(
+      value => this.newEventModel = value
+    );
+    this.eventService.isNewEvent.subscribe(
+      event => {
+        this.isNewEvent = event;
+        if (!this.isNewEvent) {
+
+          this.toastMessage = 'Esemeny frissitve';
+        } else {
+          this.toastMessage = 'Esemeny mentve';
+        }
+      }
+    );
   }
 }

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/database";
 import {Observable, ReplaySubject} from "rxjs";
 import {EventModel} from "./event-model";
-import {fromPromise} from "rxjs-compat/observable/fromPromise";
 import "rxjs-compat/add/observable/combineLatest";
 import "rxjs-compat/add/operator/switchMap";
 
@@ -12,8 +11,6 @@ import "rxjs-compat/add/operator/switchMap";
 export class EventService {
   public event = new ReplaySubject<EventModel>();
   public isNewEvent = new ReplaySubject<Boolean>();
-  private idGen = 2;
-
   constructor(public afDb: AngularFireDatabase) {
   }
 
@@ -35,5 +32,6 @@ export class EventService {
             .update({id: key}))).subscribe(ev => ev);
 
     }
+
   }
 }
