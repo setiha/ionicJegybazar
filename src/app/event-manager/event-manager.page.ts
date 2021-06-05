@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {createAnimation, NavController, NavParams, ToastController} from "@ionic/angular";
 import {EventModel} from "../shared/event-model";
 import {EventService} from "../shared/event.service";
+
 
 @Component({
   selector: 'app-event-manager',
@@ -12,6 +13,7 @@ export class EventManagerPage implements OnInit {
   newEventModel: EventModel = new EventModel();
   isNewEvent;
   toastMessage: string;
+  chooseFile;
   eventKeyList: object[] = [
     {key: 'name', label: 'Nev'},
     {key: 'date', label: 'Datum'},
@@ -57,7 +59,7 @@ export class EventManagerPage implements OnInit {
     });
   }
 
-  eventHandler(){
+  eventHandler() {
     this.eventService.event.subscribe(
       value => this.newEventModel = value
     );
@@ -72,5 +74,19 @@ export class EventManagerPage implements OnInit {
         }
       }
     );
+  }
+
+  fileChoose() {
+    let chooser = (<HTMLInputElement>document.querySelector("#native-file-chooser"));
+    let file = chooser.files[0];
+    let reader:any = new FileReader();
+    reader.addEventListener("load", () => {
+      this.newEventModel.pictureURL = reader.result;
+    }, false);
+    if (file) {
+      reader.readAsDataURL(file);
+      console.log(file)
+    }
+
   }
 }

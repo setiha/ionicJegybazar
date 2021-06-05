@@ -8,13 +8,15 @@ import { EventManagerPageRoutingModule } from './event-manager-routing.module';
 
 import { EventManagerPage } from './event-manager.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EventManagerPageRoutingModule
+    EventManagerPageRoutingModule,
   ],
-  declarations: [EventManagerPage]
+  declarations: [EventManagerPage],
+
 })
 export class EventManagerPageModule {}

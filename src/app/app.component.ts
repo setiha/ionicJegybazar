@@ -9,6 +9,8 @@ import {LoginPage} from "./login/login.page";
 })
 export class AppComponent {
   rootPage: any = LoginPage;
-  constructor() {}
+
+  constructor() {
+  }
 
 }

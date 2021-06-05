@@ -4,3 +4,7 @@ $base: rgb(100, 50, 50);
 .event-edit-button {
   color: lighten($base, 40%);
 }
+img {
+  width: auto;
+  height:100%;
+}

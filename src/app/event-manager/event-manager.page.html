@@ -20,6 +20,12 @@
     </ion-item>
     <ion-button *ngIf="isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Mentes</ion-button>
     <ion-button *ngIf="!isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Frissites</ion-button>
+    <ion-button expand="block" color="secondary">
+      <label  class="custom-file-upload">
+        <input id="native-file-chooser" type="file" (change)="fileChoose()" [(ngModel)]="chooseFile"/>
+        Kep feltoltese
+      </label>
+    </ion-button>
   </ion-list>
 
 </ion-content>

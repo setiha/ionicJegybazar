@@ -24,6 +24,7 @@ import {EventService} from "./shared/event.service";
 import {EventManagerPage} from "./event-manager/event-manager.page";
 import {EventManagerPageModule} from "./event-manager/event-manager.module";
 
+
 export const firebaseConfig = {
   baseUrl: 'https://jegybazar-133bd.firebaseio.com/',
   registrationUrl: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key',
@@ -49,9 +50,10 @@ export const firebaseConfig = {
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule, HomePageModule, TabsPageModule, TicketPageModule, SellTicketPageModule, AngularFireDatabaseModule, AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     HttpClientModule, EventManagerPageModule],
-  providers: [{
+  providers: [
+    {
     provide: RouteReuseStrategy,
-    useClass: IonicRouteStrategy
+    useClass: IonicRouteStrategy,
   }, NavParams, NavController, HttpClient, EventService],
   bootstrap: [AppComponent],
 })
