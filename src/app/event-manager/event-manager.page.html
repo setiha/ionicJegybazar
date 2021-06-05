@@ -11,21 +11,23 @@
   <ion-list lines="full" class="ion-no-margin">
     <ion-item *ngFor="let inputItem of eventKeyList">
       <ion-label fixed>{{inputItem.label}}</ion-label>
-      <ion-input *ngIf="inputItem.key !=='date' " [(ngModel)]="newEventModel[inputItem.key]" type="text"></ion-input>
+      <ion-input *ngIf="inputItem.key !=='date'"
+                 [(ngModel)]="newEventModel[inputItem.key]"
+                 type="text"></ion-input>
       <ion-datetime *ngIf="inputItem.key == 'date'"
                     [(ngModel)]="newEventModel[inputItem.key]"
                     display-format="YYYY, MMM D, HH"
                     picker-format="YYYY, MMM D, HH"
                     value=""></ion-datetime>
     </ion-item>
-    <ion-button *ngIf="isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Mentes</ion-button>
-    <ion-button *ngIf="!isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Frissites</ion-button>
     <ion-button expand="block" color="secondary">
       <label  class="custom-file-upload">
-        <input id="native-file-chooser" type="file" (change)="fileChoose()" [(ngModel)]="chooseFile"/>
+        <input id="native-file-chooser" type="file" (change)="fileChoose()"/>
         Kep feltoltese
       </label>
     </ion-button>
+    <ion-button *ngIf="isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Mentes</ion-button>
+    <ion-button *ngIf="!isNewEvent" expand="block" color="primary" (click)="saveNewEvent()">Frissites</ion-button>
   </ion-list>
 
 </ion-content>

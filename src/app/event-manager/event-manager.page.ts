@@ -28,6 +28,7 @@ export class EventManagerPage implements OnInit {
   }
 
   ngOnInit() {
+    this.isNewEvent = true;
     this.eventHandler();
   }
 
@@ -85,7 +86,7 @@ export class EventManagerPage implements OnInit {
     }, false);
     if (file) {
       reader.readAsDataURL(file);
-      console.log(file)
+
     }
 
   }
