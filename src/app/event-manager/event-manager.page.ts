@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {createAnimation, NavController, NavParams, ToastController} from "@ionic/angular";
+import {createAnimation, LoadingController, NavController, ToastController} from "@ionic/angular";
 import {EventModel} from "../shared/event-model";
 import {EventService} from "../shared/event.service";
 import firebase from "firebase";
@@ -15,6 +15,7 @@ export class EventManagerPage implements OnInit {
   isNewEvent;
   toastMessage: string;
   storage: any;
+  loading;
   eventKeyList: object[] = [
     {key: 'name', label: 'Nev'},
     {key: 'date', label: 'Datum'},
@@ -24,7 +25,8 @@ export class EventManagerPage implements OnInit {
 
   constructor(public navCtr: NavController,
               public eventService: EventService,
-              public toastController: ToastController) {
+              public toastController: ToastController,
+              public loadingController: LoadingController) {
     this.storage = firebase.storage().ref();
   }
 
@@ -88,18 +90,32 @@ export class EventManagerPage implements OnInit {
       //upload file content
       storageRef.put(file).then(
         snapshot => snapshot.ref.getDownloadURL().then(
-          value =>{
+          value => {
             this.newEventModel.pictureURL = value;
+            this.loading.dismiss().then();
           }
         )
       )
         .catch(
-          error => console.error(error)
+          error => {
+            console.error(error);
+            this.loading.dismiss().then();
+          }
         )
     };
-    if (file) {
-      reader.readAsDataURL(file);
 
+    if (file) {
+      this.presentLoading().then();
+      reader.readAsDataURL(file);
     }
+  }
+
+  async presentLoading() {
+     this.loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      cssClass: 'my-custom-class',
+      message: 'Varjon mig a kep betoltodott',
+    });
+    await this.loading.present();
   }
 }
