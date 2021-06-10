@@ -23,6 +23,9 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {EventService} from "./shared/event.service";
 import {EventManagerPage} from "./event-manager/event-manager.page";
 import {EventManagerPageModule} from "./event-manager/event-manager.module";
+import {TicketServiceService} from "./shared/ticket-service.service";
+import {ShowDatePipe} from "./pipes/show-date.pipe";
+
 
 
 export const firebaseConfig = {
@@ -46,16 +49,19 @@ export const firebaseConfig = {
     TabsPage,
     TicketPage,
     SellTicketPage,
-  EventManagerPage],
+    EventManagerPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule, HomePageModule, TabsPageModule, TicketPageModule, SellTicketPageModule, AngularFireDatabaseModule, AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     HttpClientModule, EventManagerPageModule],
   providers: [
     {
-    provide: RouteReuseStrategy,
-    useClass: IonicRouteStrategy,
-  }, NavParams, NavController, HttpClient, EventService],
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy,
+    }, NavParams, NavController, HttpClient, EventService, TicketServiceService],
   bootstrap: [AppComponent],
+  exports: [
+
+  ]
 })
 export class AppModule {
 }

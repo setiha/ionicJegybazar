@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.eventService.getAllEvent().snapshotChanges().subscribe(value => value.map(val => this.eventIds.push(val.key)));
     this.eventService.getAllEvent().valueChanges().subscribe(
       events => {
         this.eventList = events

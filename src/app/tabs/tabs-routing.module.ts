@@ -28,7 +28,7 @@ const routes: Routes = [
         loadChildren: () => import('../event-manager/event-manager.module').then(m => m.EventManagerPageModule)
       },
       {
-        path: 'event-manager',
+        path: 'ticket',
         loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
       },
       {

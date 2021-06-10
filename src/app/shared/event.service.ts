@@ -9,13 +9,16 @@ import "rxjs-compat/add/operator/switchMap";
   providedIn: 'root'
 })
 export class EventService {
+  allEvents;
+  idAndPic: Array<{id: string, picture: string}>;
   public event = new ReplaySubject<EventModel>();
   public isNewEvent = new ReplaySubject<Boolean>();
   constructor(public afDb: AngularFireDatabase) {
   }
 
   getAllEvent() {
-    return this.afDb.list("events");
+    this.allEvents = this.afDb.list("events");
+    return this.allEvents;
 
   }
 
