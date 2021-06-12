@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/database";
-import {Observable, ReplaySubject} from "rxjs";
+import {Observable, ReplaySubject, Subject} from "rxjs";
 import {EventModel} from "./event-model";
+import {fromPromise} from "rxjs-compat/observable/fromPromise";
 import "rxjs-compat/add/observable/combineLatest";
 import "rxjs-compat/add/operator/switchMap";
 
@@ -9,17 +10,16 @@ import "rxjs-compat/add/operator/switchMap";
   providedIn: 'root'
 })
 export class EventService {
-  allEvents;
-  idAndPic: Array<{id: string, picture: string}>;
   public event = new ReplaySubject<EventModel>();
   public isNewEvent = new ReplaySubject<Boolean>();
+
+
   constructor(public afDb: AngularFireDatabase) {
+
   }
 
   getAllEvent() {
-    this.allEvents = this.afDb.list("events");
-    return this.allEvents;
-
+    return this.afDb.list("events");
   }
 
   save(param: EventModel) {
@@ -37,4 +37,6 @@ export class EventService {
     }
 
   }
+
+
 }
