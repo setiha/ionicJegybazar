@@ -34,7 +34,6 @@ export class TicketPage implements OnInit {
         this.ticketList = tickets
       });
   }
-
   getPicture(id) {
     return this.pictures[id];
   }
@@ -45,7 +44,6 @@ export class TicketPage implements OnInit {
       .duration(500)
       .fromTo("opacity", 1, 0);
     animation.play().then(r => this.navCtr.back()).then(animation.stop);
-
   }
 
 }
