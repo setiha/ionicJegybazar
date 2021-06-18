@@ -24,8 +24,6 @@ import {EventService} from "./shared/event.service";
 import {EventManagerPage} from "./event-manager/event-manager.page";
 import {EventManagerPageModule} from "./event-manager/event-manager.module";
 import {TicketServiceService} from "./shared/ticket-service.service";
-import {ShowDatePipe} from "./pipes/show-date.pipe";
-
 
 
 export const firebaseConfig = {

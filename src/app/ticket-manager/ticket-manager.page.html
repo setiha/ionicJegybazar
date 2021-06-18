@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="clickOnkBackButton()">
+      <ion-icon name="caret-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Uj jegy</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Esemeny</ion-label>
+      <ion-select placeholder="Valassz egy esemenyt">
+        <ion-select-option  *ngFor=" let event of eventList">{{event.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngFor="let inputItem of ticketKeyList">
+      <ion-label>{{inputItem.label}}</ion-label>
+      <ion-input [(ngModel)]="newTicketModel[inputItem.key]"></ion-input>
+
+    </ion-item>
+    <ion-button  *ngFor="let event of eventList" expand="block" color="primary" (click)="onSubmit(event)">Frissites
+    </ion-button>
+  </ion-list>
+</ion-content>
+
+

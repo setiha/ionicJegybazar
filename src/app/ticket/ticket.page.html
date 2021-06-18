@@ -8,13 +8,22 @@
 </ion-header>
 
 <ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="openTicketManager()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-item>
+    <ion-searchbar #searchInput (click)="cancelText()" [showCancelButton]="shouldShowCancel"
+                   (keyup)="ticketListUpdate($event)"></ion-searchbar>
+  </ion-item>
   <ion-list>
  <ion-item *ngFor="let ticket of ticketList">
    <ion-thumbnail slot="start">
      <img class="eventPicture" [src] ="getPicture(ticket.eventId)">
    </ion-thumbnail>
    <ion-label>
-     <h3>Esemeny neve</h3>
+     <h3>{{ticket.event.name}}</h3>
      <p>{{ticket.currentBid}}Ft, {{ticket.bidEndDate | showDate}}</p>
    </ion-label>
      <ion-button slot="end" fill="clear" size="large"><ion-icon name="arrow-forward-outline"></ion-icon>

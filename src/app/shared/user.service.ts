@@ -19,6 +19,8 @@ import {loginDataModel} from "./loginDataModel";
   providedIn: 'root'
 })
 export class UserService {
+  isLoggedIn$ = new ReplaySubject<boolean>(1);
+  user = new ReplaySubject<any>(1);
   isLogin: boolean = false;
   currentUser: loginDataModel = new loginDataModel();
   loginSubject: Subject<any> = new Subject();
@@ -30,6 +32,20 @@ export class UserService {
       this.currentUser = localStorage.loggedInUser;
       this.setLoggedInState()
     }
+
+    this.afAuth.authState.subscribe(
+      user => {
+        if (user != null) {
+          this.getUserById(user.uid).subscribe(remoteUser => {
+            this.user.next(remoteUser);
+            this.isLoggedIn$.next(true);
+          });
+        } else {
+          this.user.next(null);
+          this.isLoggedIn$.next(false);
+        }
+      }
+    );
   }
 
   setLoggedInState() {
@@ -115,6 +131,16 @@ export class UserService {
           }
         }
       );
+  }
+
+  addTicket(ticketId: any): Observable<any> {
+    return this.user.first().flatMap(
+      user => {
+        return this.afDb.list(`users/${user.id}/tickets`).push(ticketId);
+      });
+  }
+  getCurrentUser() {
+    return this.user.asObservable();
   }
 
 }

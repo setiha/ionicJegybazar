@@ -17,6 +17,9 @@ export class EventService {
   constructor(public afDb: AngularFireDatabase) {
 
   }
+  getEventById(id: any) {
+    return this.afDb.object<EventModel>(`events/${id}`).valueChanges();
+  }
 
   getAllEvent() {
     return this.afDb.list("events");
@@ -38,5 +41,9 @@ export class EventService {
 
   }
 
+  delete(event: EventModel) {
+    return Observable.fromPromise(this.afDb.object(`events/${event.id}`).remove());
+
+  }
 
 }

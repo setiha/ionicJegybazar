@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: () => import('../ticket/ticket.module').then(m => m.TicketPageModule)
       },
       {
+        path: 'ticket-manager',
+        loadChildren: () => import('../ticket-manager/ticket-manager.module').then(m => m.TicketManagerPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

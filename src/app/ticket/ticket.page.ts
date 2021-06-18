@@ -1,41 +1,86 @@
-import {Component, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef, OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {createAnimation, IonRouterOutlet, NavController, NavParams} from "@ionic/angular";
 import {TicketServiceService} from "../shared/ticket-service.service";
-import {ShowDatePipe} from "../pipes/show-date.pipe";
-import {EventService} from "../shared/event.service";
-import {EventModel} from "../shared/event-model";
-import {ReplaySubject, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
+import 'rxjs-compat/add/observable/fromEvent';
+import 'rxjs-compat/add/operator/distinctUntilChanged';
+import {TicketModel} from "../shared/ticket-model";
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.page.html',
   styleUrls: ['./ticket.page.scss'],
 })
-export class TicketPage implements OnInit {
-  ticketList = [];
-  pipe;
-  pictures = {};
+export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
+  private ticketsSubscription: Subscription;
+  ticketList;
+  searchText: string;
+  shouldShowCancel: boolean = true;
+  private filteredText$ = new BehaviorSubject<string>(null);
+
   constructor(private navCtr: NavController,
               public ticketService: TicketServiceService,
-              public eventService: EventService) {
+              private cdr: ChangeDetectorRef) {
+
+  }
+
+  ngAfterViewInit(): void {
 
   }
 
   ngOnInit() {
-    this.eventService.getAllEvent().valueChanges().subscribe(
-      (events:any) => events.map(
-        (event:any) => {
-          this.pictures[event.id]= event.pictureURL;
-        }
-      )
-    );
-    this.ticketService.getAllTicket().valueChanges().subscribe(
+    this.ticketService.ticketDetails();
+    this.ticketService.getAllTicket().flatMap(
       tickets => {
-        this.ticketList = tickets
-      });
+        return this.filteredText$.map(
+          filterText => {
+            if (filterText === null) {
+              return tickets;
+            } else {
+              return tickets.filter(
+                ticket => {
+                  return ticket.event.name.toLowerCase().indexOf(filterText.toLowerCase()) > -1
+                }
+              );
+            }
+          }
+        );
+      }
+    ).subscribe(tickets => {
+      this.ticketList = tickets;
+      console.log(this.ticketList);
+      this.cdr.detectChanges();
+    });
+
   }
+
+  ngOnDestroy(): void {
+    this.ticketsSubscription.unsubscribe();
+  }
+
+  ticketListUpdate(event) {
+    this.searchText = (event.target as HTMLInputElement).value;
+    if (this.searchText.length === null) {
+      this.searchText = null;
+    } else {
+      this.filteredText$.next(this.searchText);
+    }
+  }
+
   getPicture(id) {
-    return this.pictures[id];
+    return this.ticketService.pictures[id];
+  }
+
+  cancelText() {
+    this.searchText = null;
+    this.filteredText$.next(this.searchText);
   }
 
   clickOnkBackButton() {
@@ -46,4 +91,8 @@ export class TicketPage implements OnInit {
     animation.play().then(r => this.navCtr.back()).then(animation.stop);
   }
 
+  openTicketManager() {
+    console.log('faszom');
+    this.navCtr.navigateRoot('tabs/ticket-manager').then(value => value);
+  }
 }

@@ -4,7 +4,16 @@ $base: rgb(100, 50, 50);
 .event-edit-button {
   color: lighten($base, 40%);
 }
+
 img {
   width: auto;
-  height:100%;
+  height: 100%;
+}
+.orderItem{
+  margin:0;
+  padding:0;
+}
+#deleteIcon {
+  cursor: pointer;
+  color: black;
 }

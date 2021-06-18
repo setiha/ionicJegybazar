@@ -80,6 +80,7 @@ export class EventManagerPage implements OnInit {
     );
   }
 
+
   fileChoose(event) {
     let file = event.target.files[0];
     let reader: any = new FileReader();
