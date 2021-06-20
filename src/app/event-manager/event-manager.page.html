@@ -18,11 +18,11 @@
                     [(ngModel)]="newEventModel[inputItem.key]"
                     display-format="YYYY, MMM D, HH"
                     picker-format="YYYY, MMM D, HH"
-                    value=""></ion-datetime>
+                    value=""  min="2020" max="2099-10-31"></ion-datetime>
     </ion-item>
     <ion-button expand="block" color="secondary">
       <label  class="custom-file-upload">
-        <input id="native-file-chooser" type="file" (change)="fileChoose($event)"/>
+        <input id="native-file-chooser" type="file" multiple="true" (change)="fileChoose($event)"/>
         Kep feltoltese
       </label>
     </ion-button>

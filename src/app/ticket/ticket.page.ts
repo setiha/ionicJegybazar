@@ -12,6 +12,7 @@ import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import 'rxjs-compat/add/observable/fromEvent';
 import 'rxjs-compat/add/operator/distinctUntilChanged';
 import {TicketModel} from "../shared/ticket-model";
+import {LicitPage} from "../licit/licit.page";
 
 @Component({
   selector: 'app-ticket',
@@ -55,7 +56,6 @@ export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
       }
     ).subscribe(tickets => {
       this.ticketList = tickets;
-      console.log(this.ticketList);
       this.cdr.detectChanges();
     });
 
@@ -92,7 +92,10 @@ export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openTicketManager() {
-    console.log('faszom');
     this.navCtr.navigateRoot('tabs/ticket-manager').then(value => value);
+  }
+  ticketSell(ticket){
+    this.navCtr.navigateRoot('tabs/licit').then(value => value);
+    this.ticketService.ticketSell(ticket)
   }
 }

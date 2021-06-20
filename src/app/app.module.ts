@@ -13,11 +13,11 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
 import {HomePage} from "./home/home.page";
 import {TabsPage} from "./tabs/tabs.page";
 import {TicketPage} from "./ticket/ticket.page";
-import {SellTicketPage} from "./sell-ticket/sell-ticket.page";
+import {LicitPage} from "./licit/licit.page";
 import {HomePageModule} from "./home/home.module";
 import {TabsPageModule} from "./tabs/tabs.module";
 import {TicketPageModule} from "./ticket/ticket.module";
-import {SellTicketPageModule} from "./sell-ticket/sell-ticket.module";
+import {SellTicketPageModule} from "./licit/licit";
 import {AngularFireModule} from "@angular/fire";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {EventService} from "./shared/event.service";
@@ -46,7 +46,7 @@ export const firebaseConfig = {
     HomePage,
     TabsPage,
     TicketPage,
-    SellTicketPage,
+    LicitPage,
     EventManagerPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule, HomePageModule, TabsPageModule, TicketPageModule, SellTicketPageModule, AngularFireDatabaseModule, AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,

@@ -26,7 +26,7 @@
      <h3>{{ticket.event.name}}</h3>
      <p>{{ticket.currentBid}}Ft, {{ticket.bidEndDate | showDate}}</p>
    </ion-label>
-     <ion-button slot="end" fill="clear" size="large"><ion-icon name="arrow-forward-outline"></ion-icon>
+     <ion-button slot="end" fill="clear" size="large" (click)="ticketSell(ticket)"><ion-icon name="arrow-forward-outline"></ion-icon>
      </ion-button>
 
  </ion-item>

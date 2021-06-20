@@ -16,8 +16,8 @@ const routes: Routes = [
         loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
-        path: 'sell-ticket',
-        loadChildren: () => import('../sell-ticket/sell-ticket.module').then(m => m.SellTicketPageModule)
+        path: 'licit',
+        loadChildren: () => import('../licit/licit').then(m => m.SellTicketPageModule)
       },
       {
         path: 'login',

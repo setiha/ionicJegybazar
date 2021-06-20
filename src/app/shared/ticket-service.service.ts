@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/database";
 import {EventService} from "./event.service";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, ReplaySubject} from "rxjs";
 import {TicketModel} from "./ticket-model";
 import 'rxjs/add/observable/zip';
 import "rxjs-compat/add/observable/forkJoin";
@@ -16,7 +16,7 @@ import {UserModel} from "./user-model";
 export class TicketServiceService {
   pictures = {};
   ticketEvent = {};
-  ticketListForDelete;
+  sellTicket = new ReplaySubject();
 
   constructor(public afDb: AngularFireDatabase,
               public eventService: EventService,
@@ -74,5 +74,8 @@ export class TicketServiceService {
       .do(key => Observable.fromPromise(
         this.afDb.object(`tickets/${key}`).update({id: key}))).subscribe(value => value)
 
+  }
+  ticketSell(ticket) {
+    this.sellTicket.next(ticket);
   }
 }

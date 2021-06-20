@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SellTicketPageRoutingModule } from './sell-ticket-routing.module';
+import { LicitPageRoutingModule } from './licit-routing.module';
 
-import { SellTicketPage } from './sell-ticket.page';
+import { LicitPage } from './licit.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SellTicketPageRoutingModule
+    LicitPageRoutingModule
   ],
-  declarations: [SellTicketPage]
+  declarations: [LicitPage]
 })
 export class SellTicketPageModule {}
