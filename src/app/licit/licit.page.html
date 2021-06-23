@@ -8,5 +8,40 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+  <ion-item>
+    <ion-label>Elado:  </ion-label>
+    <ion-input class="ion-margin-start" type="text" disabled="true">{{seller}}</ion-input>
+  </ion-item>
+    <ion-item>
+      <ion-label>Esemeny:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{eventName}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A jegyek szama:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.numberOfTickets}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Min. licit:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.minimalBidPrice}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Licit lepcso:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.bidStep}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Licit szamlalo:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.bidCounter}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A licit allasa:  </ion-label>
+      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.currentBid}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A licit vege:  </ion-label>
+      <ion-input class="ion-margin-start" type=text
+                 disabled="true">{{sellTicket.bidEndDate | date:'YYYY/MM/dd-HH:mm'}}</ion-input>
+    </ion-item>
 
+  </ion-list>
 </ion-content>

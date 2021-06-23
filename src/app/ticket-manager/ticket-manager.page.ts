@@ -40,7 +40,10 @@ export class TicketManagerPage implements OnInit {
     this.newTicketModel.currentBid = null;
     this.newTicketModel.bidCounter = null;
     this.userService.getCurrentUser().subscribe(
-      user => this.newTicketModel.sellerUserId = user.id
+      user => {
+        this.newTicketModel.sellerUserId = user.id;
+        this.newTicketModel.seller = user;
+      }
     );
   }
 
@@ -51,6 +54,7 @@ export class TicketManagerPage implements OnInit {
       .fromTo("opacity", 1, 0);
     animation.play().then(r => this.navCtr.back()).then(animation.stop);
   }
+
   onSubmit(event) {
     this.newEvent = '';
     this.newTicketModel.eventId = event.id;
@@ -59,7 +63,8 @@ export class TicketManagerPage implements OnInit {
     this.navCtr.navigateRoot('tabs/ticket').then(value => this.newTicketModel = new TicketModel());
 
   }
-select(event){
+
+  select(event) {
     console.log(event)
-}
+  }
 }

@@ -1,0 +1,6 @@
+.item-interactive-disabled.sc-ion-label-md-h:not(.item-multiple-inputs), .item-interactive-disabled:not(.item-multiple-inputs) .sc-ion-label-md-h {
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
+  color: #3a7be0;
+}

@@ -94,7 +94,7 @@ export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
   openTicketManager() {
     this.navCtr.navigateRoot('tabs/ticket-manager').then(value => value);
   }
-  ticketSell(ticket){
+  ticketSell(ticket ){
     this.navCtr.navigateRoot('tabs/licit').then(value => value);
     this.ticketService.ticketSell(ticket)
   }
