@@ -16,6 +16,7 @@ import {UserModel} from "./user-model";
 export class TicketServiceService {
   pictures = {};
   ticketEvent = {};
+  time: boolean;
   sellTicket:ReplaySubject<TicketModel> = new ReplaySubject<TicketModel>();
 
   constructor(public afDb: AngularFireDatabase,
@@ -76,6 +77,7 @@ export class TicketServiceService {
 
   }
   ticketSell(ticket:TicketModel) {
-    this.sellTicket.next(ticket)
+    this.time = false;
+    localStorage.setItem('ticketId', ticket.id);
   }
 }

@@ -1,47 +1,136 @@
 <ion-header>
   <ion-toolbar id="first">
-    <ion-buttons slot="start" (click)="clickOnkBackButton()">
-      <ion-icon name="caret-back-outline"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-icon name="caret-back-outline" size="large" (click)="clickOnkBackButton()"></ion-icon>
     </ion-buttons>
-    <ion-title>Licit</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="close-circle" size="large" (click)="deleteTicketData()"></ion-icon>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Licit</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-  <ion-item>
-    <ion-label>Elado:  </ion-label>
-    <ion-input class="ion-margin-start" type="text" disabled="true">{{seller}}</ion-input>
-  </ion-item>
+  <ion-list *ngIf="!oneTicket">
     <ion-item>
-      <ion-label>Esemeny:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{eventName}}</ion-input>
+      <ion-label>Esemeny</ion-label>
+      <ion-select [(ngModel)]="ticketEvent"
+                  (ngModelChange)="setTicketSeller($event)"
+                  okText="Okay" cancelText="Dismiss">
+        <ion-select-option *ngFor="let event of getTicketEventName()"
+                           [value]="event">{{event}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>A jegyek szama:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.numberOfTickets}}</ion-input>
+      <ion-label>Elado</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss" [(ngModel)]="seller"
+                  (ngModelChange)="setTicketNumberOfTickets($event)">
+        <ion-select-option *ngFor="let ticket of getTicketSellerName()" [value]="ticket">{{ticket}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Min. licit:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.minimalBidPrice}}</ion-input>
+      <ion-label>A jegyek szama</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.numberOfTickets"
+                  (ngModelChange)="setMinTicketLicit($event)">
+        <ion-select-option *ngFor="let number of getTicketNumber()" [value]="number">{{number}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Licit lepcso:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.bidStep}}</ion-input>
+      <ion-label>Min. Licit</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.minimalBidPrice"
+                  (ngModelChange)="setTicketBidStep($event)">
+        <ion-select-option *ngFor="let minLicit of getTicketMinimalBid()"
+                           [value]="minLicit">{{minLicit}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Licit szamlalo:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.bidCounter}}</ion-input>
+      <ion-label>Licit lepcso</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.bidStep"
+                  (ngModelChange)="setTicketBidCounter($event)">
+        <ion-select-option *ngFor="let bidStep of getTicketBidStep()"
+                           [value]="bidStep">{{bidStep}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>A licit allasa:  </ion-label>
-      <ion-input class="ion-margin-start" type=text disabled="true">{{sellTicket.currentBid}}</ion-input>
+      <ion-label>Licit szamlalo</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.bidCounter"
+                  (ngModelChange)="setTicketCurrentBid($event)"
+
+      >
+        <ion-select-option *ngFor="let bidStep of getTicketBidCounter()"
+                           [value]="bidStep">{{bidStep}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>A licit vege:  </ion-label>
+      <ion-label>Licit allasa</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.currentBid"
+                  (ngModelChange)="setTicketBidEndDate($event)"
+
+      >
+        <ion-select-option *ngFor="let currentBid of getTicketCurrentBid()"
+                           [value]="currentBid">{{currentBid}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>A licit vege</ion-label>
+      <ion-select okText="Okay" cancelText="Dismiss"
+                  [(ngModel)]="sellTicket.bidEndDate">
+        <ion-select-option *ngFor="let bidEndDate of getTicketBidEndDate()"
+                           [value]="bidEndDate">{{bidEndDate | date:'YYYY/MM/dd-HH:mm' }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+<ion-item>
+  <ion-label>Licitem</ion-label>
+  <ion-input type="number"  [(ngModel)]="licitCounter" (click)="getTicketId($event)"></ion-input>
+</ion-item>
+
+
+
+  </ion-list>
+  <ion-list *ngIf="oneTicket">
+    <ion-item>
+      <ion-label>Esemeny:</ion-label>
+      <ion-input class="ion-margin-start" type='text' disabled="true">{{ticketEvent}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Elado:</ion-label>
+      <ion-input class="ion-margin-start" type="text" disabled="true">{{seller}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A jegyek szama:</ion-label>
+      <ion-input class="ion-margin-start" type="number" disabled="true">{{sellTicket.numberOfTickets}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Min. licit:</ion-label>
+      <ion-input class="ion-margin-start" type="number" disabled="true">{{sellTicket.minimalBidPrice}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Licit lepcso:</ion-label>
+      <ion-input class="ion-margin-start" type="number" disabled="true">{{sellTicket.bidStep}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Licit szamlalo:</ion-label>
+      <ion-input class="ion-margin-start" type="number" disabled="true">{{sellTicket.bidCounter}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A licit allasa:</ion-label>
+      <ion-input slot="end" class="ion-margin-start" type="number" disabled="true">{{sellTicket.currentBid}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>A licit vege:</ion-label>
       <ion-input class="ion-margin-start" type=text
                  disabled="true">{{sellTicket.bidEndDate | date:'YYYY/MM/dd-HH:mm'}}</ion-input>
     </ion-item>
-
+    <ion-item>
+      <ion-label>Licitem:</ion-label>
+      <ion-input class="ion-margin-start" type="number" [disabled]="licitClosed"
+                 [(ngModel)]="licitCounter"></ion-input>
+    </ion-item>
+    <ion-button expand="block" color="primary" (click)="licitManager()">Licitalok</ion-button>
   </ion-list>
 </ion-content>

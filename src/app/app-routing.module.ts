@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {GuardService} from "./shared/guard.service";
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'licit',
-    loadChildren: () => import('./licit/licit').then(m => m.SellTicketPageModule)
+    loadChildren: () => import('./licit/licit').then(m => m.SellTicketPageModule),
+    canDeactivate: [GuardService]
   },
   {
     path: 'login',

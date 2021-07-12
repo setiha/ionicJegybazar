@@ -56,9 +56,9 @@ export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
       }
     ).subscribe(tickets => {
       this.ticketList = tickets;
-      this.cdr.detectChanges();
-    });
 
+    });
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {
@@ -95,7 +95,7 @@ export class TicketPage implements OnInit, AfterViewInit, OnDestroy {
     this.navCtr.navigateRoot('tabs/ticket-manager').then(value => value);
   }
   ticketSell(ticket ){
-    this.navCtr.navigateRoot('tabs/licit').then(value => value);
     this.ticketService.ticketSell(ticket)
+    this.navCtr.navigateRoot('tabs/licit').then(value => value);
   }
 }
